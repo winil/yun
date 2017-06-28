@@ -1,0 +1,39 @@
+// 下载开始
+                screen_shoot();
+                //截图模块
+            function screen_shoot(){
+                $('.save,.share,header').hide();
+                var screenClip = api.require('screenClip');
+                alert("请点击图片分享");
+                screenClip.open({
+                cutFrame:{
+                        x:0,            //（可选项）数字类型；截图区域左上角点坐标；默认：10
+                        y:0,            //（可选项）数字类型；截图区域左上角点坐标；默认：128
+                        w:api.winWidth,           //（可选项）数字类型；截图区域的宽；默认：当前屏幕宽减二十
+                        h:api.winHeight,          //（可选项）数字类型；截图区域的高；默认：w
+                        borderWidth:0    
+                    },
+                save:{
+                        album:false, //是否保存到系统相册
+                        imgPath : 'fs://images/',
+                        imgName : 'wx.jpg'
+                    }
+                },
+                function( ret, err ){     
+                    
+                    if( ret.status ){
+                        share_moment();
+                    }else{
+                     // alert(JSON.stringify( err ) );
+                    }
+                });
+            }
+            function share_moment(){
+                var sharedModule = api.require('shareAction');
+                sharedModule.share({
+                    text: '分享图片',
+                    type: 'image',
+                    path:'fs://images/wx.jpg'
+                });
+                $('.save,.share,header').show();
+            }
