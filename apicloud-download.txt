@@ -1,0 +1,25 @@
+// 1.先下载图片
+            api.download({
+            url: url, //url为图片的网络地址，如https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3087856709,3517988819&fm=58
+            savePath: 'fs://images/qr.jpg', //下载后保存路径，要与保存图片的path路径一致
+            report: true,
+            cache: true,
+            allowResume: true
+        }, function(ret, err) {
+            if (ret.state == 1) {
+                //下载成功
+                // alert("YES:"+JSON.stringify(ret));
+
+                // ***********2.保存图片
+                api.saveMediaToAlbum({
+                                path :'fs://images/qr.jpg' //图片源地址（不支持网络图片，所以要先用api.download下载好图片再保存图片到本地）
+                        }, function(ret, err) {
+                                if (ret) {
+                                        alert("图片保存成功");
+                                } else {
+                                        // alert(JSON.stringify(err));
+                                }
+                        });
+                // ************
+            } 
+        });
