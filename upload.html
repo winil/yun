@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FormData Test - jb51.net</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <form id="form" method="post" action="upload.php" enctype="multipart/form-data">
+      <input type="file" name="file" id="file" />
+      <input type="submit" name="do" id="odo" value="submit" />
+      <div onclick="file.click()">YES</div>
+    </form>
+    <script>
+    // 选择文件确定后通过Ajax执行文件上传
+    	$('#file').change(function(){
+          doUpload();
+});
+    	
+function doUpload() {  
+	//1通过表单对象创建 FormData
+//   var formData = new FormData($( "#form" )[0]);
+     //2创建空对象方式
+     var formData = new FormData();
+	formData.append('file',$("#file")[0].files[0]);
+//	formData.append('file',document.getElementById('file').files[0]);
+     $.ajax({  
+          url: 'upload.php' ,  
+          type: 'POST',  
+          data: formData,  
+          async: false,  
+          cache: false,  
+          contentType: false,  
+          processData: false,  
+          success: function (returndata) {  
+              console.log(returndata);  
+          },  
+          error: function (returndata) {  
+              alert(returndata);  
+          }  
+     });  
+} 
+    </script>
+  </body>
+</html>
+
+
+<p>php调试内容内容</p>
+<pre>
+	<?php
+	//php 接收表单提交信息并打印
+	var_dump($_REQUEST);
+	  echo '<br>';
+	  var_dump($_FILES);
+	  die();
+
+</pre>
